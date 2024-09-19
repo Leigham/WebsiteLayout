@@ -62,18 +62,17 @@ class CustomNavbar extends HTMLElement {
                 <div class="flex space-x-4">
                   <a
                     href="/"
-                    class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
-                    aria-current="page"
+                    class="nav-link home-link text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                     >Home</a
                   >
                   <a
                     href="/about"
-                    class="text-white px-3 py-2 rounded-md text-sm font-medium"
+                    class="nav-link about-link text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                     >About</a
                   >
                   <a
                     href="/hobbies"
-                    class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    class="nav-link hobbies-link text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                     >Hobbies</a
                   >
                 </div>
@@ -87,7 +86,6 @@ class CustomNavbar extends HTMLElement {
             <a
               href="/"
               class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
-              aria-current="page"
               >Home</a>
             <a
               href="/about"
@@ -102,7 +100,7 @@ class CustomNavbar extends HTMLElement {
       </nav>
     `;
 
-    // Append the template content directly to the light DOM (main document)
+    // Append the template content directly to the light DOM
     this.appendChild(template.content.cloneNode(true));
 
     // Attach event listeners for the mobile menu functionality
@@ -118,6 +116,55 @@ class CustomNavbar extends HTMLElement {
       menuIconOpen.classList.toggle("hidden", isMenuOpen);
       menuIconClose.classList.toggle("hidden", !isMenuOpen);
     });
+
+    // Highlight the active link
+    this.highlightActiveLink();
+  }
+
+  highlightActiveLink() {
+    // Get the value of the 'active-page' attribute
+    const activePage = this.getAttribute("active-page");
+
+    // Reset all links to the default class
+    const links = this.querySelectorAll(".nav-link");
+    links.forEach((link) => {
+      link.classList.remove("bg-gray-900", "text-white");
+      link.classList.add(
+        "text-gray-300",
+        "hover:bg-gray-700",
+        "hover:text-white"
+      );
+    });
+
+    // Add active class to the correct link based on the attribute
+    if (activePage) {
+      let activeLink;
+      if (activePage === "home" || activePage === "") {
+        activeLink = this.querySelector(".home-link");
+      } else {
+        activeLink = this.querySelector(`.${activePage}-link`);
+      }
+
+      if (activeLink) {
+        activeLink.classList.add("bg-gray-900", "text-white");
+        activeLink.classList.remove(
+          "text-gray-300",
+          "hover:bg-gray-700",
+          "hover:text-white"
+        );
+      }
+    }
+  }
+
+  // React to attribute changes
+  static get observedAttributes() {
+    return ["active-page"];
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (name === "active-page" && oldValue !== newValue) {
+      this.highlightActiveLink();
+    }
   }
 }
 
