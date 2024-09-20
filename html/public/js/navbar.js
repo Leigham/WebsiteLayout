@@ -1,162 +1,132 @@
 class CustomNavbar extends HTMLElement {
   constructor() {
     super();
-
-    // Create a template for the navbar
-    const template = document.createElement("template");
-    template.innerHTML = `
-      <nav class="bg-gray-800">
-        <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-          <div class="relative flex h-16 items-center justify-between">
-            <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-              <button
-                id="mobile-menu-button"
-                type="button"
-                class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                aria-controls="mobile-menu"
-                aria-expanded="false"
-              >
-                <span class="sr-only">Open main menu</span>
-                <svg
-                  id="menu-icon-open"
-                  class="block h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                  />
-                </svg>
-
-                <svg
-                  id="menu-icon-close"
-                  class="hidden h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-            <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-              <div class="flex flex-shrink-0 items-center">
-                <img
-                  class="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                  alt="Your Company"
-                />
-              </div>
-              <div class="hidden sm:ml-6 sm:block">
-                <div class="flex space-x-4">
-                  <a
-                    href="/"
-                    class="nav-link home-link text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >Home</a
-                  >
-                  <a
-                    href="/about"
-                    class="nav-link about-link text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >About</a
-                  >
-                  <a
-                    href="/hobbies"
-                    class="nav-link hobbies-link text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >Hobbies</a
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="sm:hidden hidden" id="mobile-menu">
-          <div class="space-y-1 px-2 pb-3 pt-2">
-            <a
-              href="/"
-              class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
-              >Home</a>
-            <a
-              href="/about"
-              class="block rounded-md px-3 py-2 text-base font-medium text-white"
-              >About</a>
-            <a
-              href="/hobbies"
-              class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-              >Hobbies</a>
-          </div>
-        </div>
-      </nav>
-    `;
-
-    // Append the template content directly to the light DOM
-    this.appendChild(template.content.cloneNode(true));
-
-    // Attach event listeners for the mobile menu functionality
-    const mobileMenuButton = this.querySelector("#mobile-menu-button");
-    const mobileMenu = this.querySelector("#mobile-menu");
-    const menuIconOpen = this.querySelector("#menu-icon-open");
-    const menuIconClose = this.querySelector("#menu-icon-close");
-
-    mobileMenuButton.addEventListener("click", () => {
-      const isMenuOpen = mobileMenu.classList.contains("hidden");
-      mobileMenu.classList.toggle("hidden", !isMenuOpen);
-
-      menuIconOpen.classList.toggle("hidden", isMenuOpen);
-      menuIconClose.classList.toggle("hidden", !isMenuOpen);
-    });
-
-    // Highlight the active link
-    this.highlightActiveLink();
   }
 
-  highlightActiveLink() {
-    // Get the value of the 'active-page' attribute
-    const activePage = this.getAttribute("active-page");
+  async connectedCallback() {
+    try {
+      // Fetch the external HTML template
+      const response = await fetch("/public/components/navbar.html");
 
-    // Reset all links to the default class
-    const links = this.querySelectorAll(".nav-link");
-    links.forEach((link) => {
-      link.classList.remove("bg-gray-900", "text-white");
-      link.classList.add(
-        "text-gray-300",
-        "hover:bg-gray-700",
-        "hover:text-white"
-      );
-    });
-
-    // Add active class to the correct link based on the attribute
-    if (activePage) {
-      let activeLink;
-      if (activePage === "home" || activePage === "") {
-        activeLink = this.querySelector(".home-link");
-      } else {
-        activeLink = this.querySelector(`.${activePage}-link`);
-      }
-
-      if (activeLink) {
-        activeLink.classList.add("bg-gray-900", "text-white");
-        activeLink.classList.remove(
-          "text-gray-300",
-          "hover:bg-gray-700",
-          "hover:text-white"
+      if (!response.ok) {
+        throw new Error(
+          `Failed to load navbar template: ${response.statusText}`
         );
       }
+
+      const templateText = await response.text();
+
+      // Insert the fetched HTML into the light DOM
+      this.innerHTML = templateText;
+
+      // Attach event listeners after the HTML is loaded
+      this.attachEventListeners();
+
+      // Highlight the active link based on the 'active-page' attribute
+      this.highlightActiveLink();
+    } catch (error) {
+      console.error(error);
+      this.innerHTML = `<p class="text-red-500">Failed to load navbar.</p>`;
     }
   }
 
-  // React to attribute changes
+  attachEventListeners() {
+    const menuButton = this.querySelector("#menu-button");
+    const closeButton = this.querySelector("#close-menu-button");
+    const mobileMenu = this.querySelector("#mobile-menu");
+    const menuIcon = this.querySelector("#menu-icon");
+
+    if (menuButton && mobileMenu && menuIcon && closeButton) {
+      console.log(
+        "Menu button, mobile menu, menu icon, and close button found."
+      );
+
+      // Open menu when clicking the menu button
+      menuButton.addEventListener("click", (event) => {
+        console.log("Menu button clicked");
+        event.stopPropagation();
+
+        const isMenuOpen = mobileMenu.classList.contains("hidden");
+        console.log("Is menu open before toggle:", isMenuOpen);
+
+        mobileMenu.classList.toggle("hidden", !isMenuOpen);
+        menuButton.setAttribute("aria-expanded", String(isMenuOpen));
+
+        if (isMenuOpen) {
+          menuIcon.setAttribute("d", "M6 18L18 6M6 6l12 12"); // X Icon
+        } else {
+          menuIcon.setAttribute("d", "M4 6h16M4 12h16M4 18h16"); // Hamburger Icon
+        }
+
+        console.log("Menu Open after toggle:", isMenuOpen);
+      });
+
+      // Close the menu when clicking the close button
+      closeButton.addEventListener("click", (event) => {
+        console.log("Close button clicked");
+        event.stopPropagation();
+
+        mobileMenu.classList.add("hidden");
+        menuButton.setAttribute("aria-expanded", "false");
+        menuIcon.setAttribute("d", "M4 6h16M4 12h16M4 18h16");
+
+        console.log("Menu closed via close button");
+      });
+
+      // Optional: Close the menu when clicking outside
+      document.addEventListener("click", (event) => {
+        const isClickInside =
+          menuButton.contains(event.target) ||
+          mobileMenu.contains(event.target) ||
+          closeButton.contains(event.target);
+
+        if (!isClickInside && !mobileMenu.classList.contains("hidden")) {
+          console.log("Closing menu by clicking outside");
+          mobileMenu.classList.add("hidden");
+          menuButton.setAttribute("aria-expanded", "false");
+          menuIcon.setAttribute("d", "M4 6h16M4 12h16M4 18h16");
+        }
+      });
+    } else {
+      console.error(
+        "Menu button, mobile menu, menu icon, or close button not found."
+      );
+    }
+  }
+
+  highlightActiveLink() {
+    const activePage = this.getAttribute("active-page");
+
+    if (!activePage) return;
+
+    const links = this.querySelectorAll("#mobile-menu a, .md\\:flex a");
+
+    links.forEach((link) => {
+      // Remove active classes
+      link.classList.remove("active-link");
+      link.classList.add(
+        "p-2",
+        "rounded-lg",
+        "hover:text-blue-500",
+        "transition-colors",
+        "duration-300",
+        "opacity-90"
+      );
+    });
+
+    // Find the link matching activePage
+    const activeLink = Array.from(links).find(
+      (link) =>
+        console.log(link.textContent.trim().toLowerCase()) ||
+        link.textContent.trim().toLowerCase() === activePage.toLowerCase()
+    );
+    console.log("Active link:", activeLink);
+    if (activeLink) {
+      // make the active link stand out
+      activeLink.classList.add("scale-110");
+    }
+  }
+
   static get observedAttributes() {
     return ["active-page"];
   }
