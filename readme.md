@@ -20,9 +20,13 @@
    ```
 
 3. **Run the Python server:**
+
    ```sh
     python3 .\startserver.py
    ```
+
+4. **View the website:**
+   Open your browser and navigate to http://localhost:8000
 
 ## Preview Link
 
