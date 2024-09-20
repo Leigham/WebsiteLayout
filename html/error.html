@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Error {code}</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom Styles for Animations -->
+    <style>
+      /* Define the swing animation */
+      @keyframes swing {
+        0% {
+          transform: rotate(0deg);
+        }
+        25% {
+          transform: rotate(5deg);
+        }
+        50% {
+          transform: rotate(0deg);
+        }
+        75% {
+          transform: rotate(-5deg);
+        }
+        100% {
+          transform: rotate(0deg);
+        }
+      }
+
+      /* Define the floating animation */
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
+      /* Apply the swing animation to elements with the class 'animate-swing' */
+      .animate-swing {
+        animation: swing 3s infinite;
+      }
+
+      /* Apply the floating animation to elements with the class 'animate-float' */
+      .animate-float {
+        animation: float 4s ease-in-out infinite;
+      }
+
+      /* Prevent scrolling */
+      html,
+      body {
+        height: 100%;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body
+    class="select-none bg-gray-800 text-gray-100 flex items-center justify-center min-h-screen relative"
+  >
+    <!-- Animated Background Overlay (Optional) -->
+    <div
+      class="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-700 opacity-75"
+    ></div>
+
+    <!-- Main Content Container -->
+    <div class="z-10 text-center px-4">
+      <!-- Error Code -->
+      <h1 class="text-9xl font-extrabold animate-swing transform origin-center">
+        {code}
+      </h1>
+
+      <!-- Error Message -->
+      <p class="mt-4 text-2xl md:text-3xl animate-float">{message}</p>
+
+      <!-- Home Button -->
+      <a
+        href="/"
+        class="mt-8 inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-full transition-colors duration-300"
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        Go Home
+      </a>
+    </div>
+
+    <!-- Optional Decorative Elements (e.g., animated clouds or shapes) -->
+    <div class="absolute bottom-10 left-10 animate-float">
+      <!-- Example: A simple cloud icon using SVG -->
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-12 w-12 text-indigo-300"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+      >
+        <path d="M17.293 10.293a8 8 0 11-11.586 0 5 5 0 0110.586 0z" />
+      </svg>
+    </div>
+  </body>
+</html>
