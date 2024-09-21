@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript Frameworks Videos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      src="https://kit.fontawesome.com/c27fcf0ae0.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      /* Hide the mobile menu by default */
+      #mobile-menu {
+        display: none;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-teal-500 p-4">
+      <div class="container mx-auto flex justify-between items-center">
+        <!-- Logo -->
+        <div class="text-white text-2xl font-bold">JS Frameworks</div>
+
+        <!-- Desktop Menu -->
+        <ul class="hidden md:flex space-x-8">
+          <li>
+            <a
+              href="index.html"
+              class="text-white text-lg font-medium relative after:content-[''] after:absolute after:bg-white after:h-[2px] after:w-full after:left-0 after:bottom-0 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
+            >
+              Home
+            </a>
+          </li>
+          <li>
+            <a
+              href="about.html"
+              class="text-white text-lg font-medium relative after:content-[''] after:absolute after:bg-white after:h-[2px] after:w-full after:left-0 after:bottom-0 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
+            >
+              About
+            </a>
+          </li>
+          <li>
+            <a
+              href="frameworks.html"
+              class="text-white text-lg font-medium relative after:content-[''] after:absolute after:bg-white after:h-[2px] after:w-full after:left-0 after:bottom-0 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
+            >
+              Frameworks
+            </a>
+          </li>
+          <li>
+            <a
+              href="videos.html"
+              class="text-white text-lg font-medium relative after:content-[''] after:absolute after:bg-white after:h-[2px] after:w-full after:left-0 after:bottom-0 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
+            >
+              Videos
+            </a>
+          </li>
+        </ul>
+
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-button" class="md:hidden text-white text-2xl">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+
+      <!-- Mobile Menu -->
+      <ul
+        id="mobile-menu"
+        class="md:hidden flex flex-col items-center bg-teal-500 space-y-4 mt-4"
+      >
+        <li>
+          <a href="index.html" class="text-white text-lg">Home</a>
+        </li>
+        <li>
+          <a href="about.html" class="text-white text-lg">About</a>
+        </li>
+        <li>
+          <a href="frameworks.html" class="text-white text-lg">Frameworks</a>
+        </li>
+        <li>
+          <a href="videos.html" class="text-white text-lg">Videos</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Header -->
+    <header class="bg-white py-10">
+      <div class="container mx-auto text-center">
+        <h1 class="text-4xl font-bold text-gray-800">
+          JavaScript Framework Videos
+        </h1>
+        <p class="text-gray-600 mt-4">
+          Learn more about the top JavaScript frameworks with these videos.
+        </p>
+      </div>
+    </header>
+
+    <!-- Videos Section -->
+    <section class="py-16 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
+        >
+          <!-- Video Card 1 -->
+          <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+            <img
+              src="https://via.placeholder.com/400x250"
+              alt="Video Thumbnail"
+              class="w-full"
+            />
+            <div class="p-4">
+              <h3 class="text-xl font-bold text-gray-800 mb-2">React Basics</h3>
+              <p class="text-gray-600 mb-4">
+                An introduction to React and its core concepts.
+              </p>
+              <a href="#" class="text-teal-500 hover:text-teal-600"
+                >Watch Now &rarr;</a
+              >
+            </div>
+          </div>
+
+          <!-- Video Card 2 -->
+          <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+            <img
+              src="https://via.placeholder.com/400x250"
+              alt="Video Thumbnail"
+              class="w-full"
+            />
+            <div class="p-4">
+              <h3 class="text-xl font-bold text-gray-800 mb-2">
+                Vue.js for Beginners
+              </h3>
+              <p class="text-gray-600 mb-4">
+                Learn how to get started with Vue.js step-by-step.
+              </p>
+              <a href="#" class="text-teal-500 hover:text-teal-600"
+                >Watch Now &rarr;</a
+              >
+            </div>
+          </div>
+
+          <!-- Video Card 3 -->
+          <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+            <img
+              src="https://via.placeholder.com/400x250"
+              alt="Video Thumbnail"
+              class="w-full"
+            />
+            <div class="p-4">
+              <h3 class="text-xl font-bold text-gray-800 mb-2">
+                Understanding Angular
+              </h3>
+              <p class="text-gray-600 mb-4">
+                Get an overview of Angular and its core features.
+              </p>
+              <a href="#" class="text-teal-500 hover:text-teal-600"
+                >Watch Now &rarr;</a
+              >
+            </div>
+          </div>
+
+          <!-- Video Card 4 -->
+          <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+            <img
+              src="https://via.placeholder.com/400x250"
+              alt="Video Thumbnail"
+              class="w-full"
+            />
+            <div class="p-4">
+              <h3 class="text-xl font-bold text-gray-800 mb-2">
+                Svelte Explained
+              </h3>
+              <p class="text-gray-600 mb-4">
+                A look into how Svelte works and why it's different.
+              </p>
+              <a href="#" class="text-teal-500 hover:text-teal-600"
+                >Watch Now &rarr;</a
+              >
+            </div>
+          </div>
+
+          <!-- Add more video cards as needed -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-teal-500 text-white py-6">
+      <div class="container mx-auto text-center">
+        <p>&copy; 2024 JavaScript Frameworks. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Toggle the mobile menu
+      const mobileMenuButton = document.getElementById("mobile-menu-button");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      mobileMenuButton.addEventListener("click", () => {
+        if (
+          mobileMenu.style.display === "none" ||
+          mobileMenu.style.display === ""
+        ) {
+          mobileMenu.style.display = "flex";
+        } else {
+          mobileMenu.style.display = "none";
+        }
+      });
+    </script>
+  </body>
+</html>
